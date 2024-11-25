@@ -6,7 +6,7 @@
 /*   By: buramert <buramert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 19:38:01 by buramert          #+#    #+#             */
-/*   Updated: 2024/11/24 22:53:37 by buramert         ###   ########.fr       */
+/*   Updated: 2024/11/25 21:24:11 by buramert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 6
 # endif
 
 char	*get_next_line(int fd);
