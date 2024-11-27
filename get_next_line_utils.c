@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: buramert <buramert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: burakerenmert <burakerenmert@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:56:15 by buramert          #+#    #+#             */
-/*   Updated: 2024/11/25 21:16:39 by buramert         ###   ########.fr       */
+/*   Updated: 2024/11/27 04:25:56 by burakerenme      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,62 @@ size_t	ft_strlen(const char *s)
 		i++;
 	}
 	return (i);
+}
+char	*ft_strdup(const char *s1)
+{
+	size_t			s_len;
+	size_t			i;
+	unsigned char	*str1;
+
+	s_len = (ft_strlen(s1));
+	i = 0;
+	str1 = malloc(sizeof(char) * (s_len + 1));
+	if (str1 == NULL)
+		return (NULL);
+	while (i <= s_len)
+	{
+		str1[i] = s1[i];
+		i++;
+	}
+	return ((char *)str1);
+}
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t			s1_len;
+	size_t			s2_len;
+	size_t			i;
+	size_t			j;
+	char			*str;
+
+	i = 0;
+	j = 0;
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	str = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (str == NULL)
+		return (NULL);
+	while (i < s1_len)
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (j < s2_len)
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
+	return (str);
+}
+char	*ft_strchr(const char *s, int c)
+{
+	while ((char)c != *s)
+	{
+		if (*s == '\0')
+		{
+			return (0);
+		}
+		s++;
+	}
+	return ((char *)s);
 }
