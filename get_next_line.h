@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: burakerenmert <burakerenmert@student.42    +#+  +:+       +#+        */
+/*   By: buramert <buramert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 19:38:01 by buramert          #+#    #+#             */
-/*   Updated: 2024/11/29 04:28:05 by burakerenme      ###   ########.fr       */
+/*   Updated: 2024/11/29 21:40:06 by buramert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 8
+# define BUFFER_SIZE 6
 # endif
 
 char	*get_next_line(int fd);
