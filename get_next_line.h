@@ -6,7 +6,7 @@
 /*   By: buramert <buramert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 19:38:01 by buramert          #+#    #+#             */
-/*   Updated: 2024/11/29 21:40:06 by buramert         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:00:25 by buramert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *s, int c);
+int		ft_check_line(char *str);
 
 # endif

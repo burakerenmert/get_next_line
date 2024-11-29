@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: burakerenmert <burakerenmert@student.42    +#+  +:+       +#+        */
+/*   By: buramert <buramert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:56:15 by buramert          #+#    #+#             */
-/*   Updated: 2024/11/29 03:22:42 by burakerenme      ###   ########.fr       */
+/*   Updated: 2024/11/30 01:00:13 by buramert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,16 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str[i + j] = '\0';
 	return (str);
 }
-char	*ft_strchr(const char *s, int c)
+int ft_check_line(char *str)
 {
-	while ((char)c != *s)
+	int	i;
+
+	i = 0;
+	while(str[i])
 	{
-		if (*s == '\0')
-		{
-			return (0);
-		}
-		s++;
+		if(str[i] == '\n')
+			return (1);
+		i++;
 	}
-	return ((char *)s);
+	return (0);
 }

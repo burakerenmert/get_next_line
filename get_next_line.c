@@ -6,7 +6,7 @@
 /*   By: buramert <buramert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:56:15 by buramert          #+#    #+#             */
-/*   Updated: 2024/11/30 00:06:30 by buramert         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:48:34 by buramert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static char *ft_get_line(char *str)
 		j++;
 	}
 	line = malloc(sizeof(char) * (j + 2));
-	// printf("\nstring ; %s", str);
 	while(str[i] != '\n')
 	{
 		line[i] = str[i];
@@ -34,25 +33,23 @@ static char *ft_get_line(char *str)
 	if (str[i] == '\n')
 		line[i] = '\n';
 	line[++i] = '\0';
-	// printf("\nextracted line ; %s", line);
 	return (line);
 }
-static int ft_check_line(char *str)
+static char *ft_reader(char *str, int fd)
 {
-	int	i;
+	char	*buffer;
+	int		bytes_read;
 
-	i = 0;
-	while(str[i])
-	{
-		if(str[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
+	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	buffer[bytes_read] = '\0';
+	str = ft_strjoin(str, buffer);
+	return (str);
 }
 static char *ft_get_remainder(char *str)
 {
-	// printf("\ninitial string ; %s", str);
 	int		i;
 	int		j;
 	char	*remainder;
@@ -73,46 +70,33 @@ static char *ft_get_remainder(char *str)
 	}
 	if (str[i] == '\0')
 		remainder[i + 1] = '\0';
-	// printf("\nremainder ; %s", remainder);
 	return (remainder);
 }
 char *get_next_line(int fd)
 {
-	static char *str;
-	char		*buffer;
+	static char	*str;
 	char		*temp;
 	char		*line_to_return;
-	int			bytes_read;
 	
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	if (!str)
+	if(!str)
 		str = ft_strdup("");
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	buffer[bytes_read] = '\0';
-	str = ft_strjoin(str, buffer);
-	free(buffer);
-	// printf("initial string ; %s", str);
-	if (ft_check_line(str))									//LINE FOUND
+	str	= malloc(sizeof(char) * (ft_strlen(str) + BUFFER_SIZE) + 1);
+	if (!str)
+		return (NULL);
+	str = ft_reader(str, fd);
+	if (ft_check_line(str))
 	{
 		line_to_return = ft_get_line(str);
-		if (ft_strlen(line_to_return) < ft_strlen(str))		//REMAINDER FOUND	
-		{
-			temp = ft_get_remainder(str);
-			// printf("remainder ; %s\n", temp);
-			free(str);
-			// printf("%s", str);
-			str = ft_strdup(temp);
-			// printf("string ; %s\n", str);
-		}
+		temp = ft_get_remainder(str);
+		free(str);
+		str = ft_strdup(temp);
 	}
-	else if (!(ft_check_line(str)) && bytes_read <= 0)	//EOF
+	else if (!(ft_check_line(str)) && ft_strlen(str) > 0)
 	{
-			line_to_return = str;
-			free(str);				
+		line_to_return = str;
+		free (str);
 	}
-	else if ((!(ft_check_line(str))) && bytes_read > 0)		//NO LINE FOUND
+	else
 		line_to_return = NULL;
 	return (line_to_return);
 }
@@ -120,14 +104,14 @@ int main()
 {
 	int fd;
 	fd = open("text.txt", O_RDONLY);
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	get_next_line(fd);
-	get_next_line(fd);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	// get_next_line(fd);
-
+	// get_next_line(fd);
+	// get_next_line(fd);
+	// get_next_line(fd);
 }
