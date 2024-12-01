@@ -6,7 +6,7 @@
 /*   By: burakerenmert <burakerenmert@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:56:15 by buramert          #+#    #+#             */
-/*   Updated: 2024/12/01 05:12:36 by burakerenme      ###   ########.fr       */
+/*   Updated: 2024/12/01 05:13:31 by burakerenme      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,7 @@ int main()
 {
 	int fd;
 	fd = open("text.txt", O_RDONLY);
-	if (fd < 0) {
-        perror("Failed to open file");
-        return 1;
-    }
+
 	printf("first read ; %s", get_next_line(fd));
 	printf("second read ; %s", get_next_line(fd));
 	printf("third read ; %s", get_next_line(fd));
@@ -126,5 +123,6 @@ int main()
 	// get_next_line(fd);
 	// get_next_line(fd);
 	// get_next_line(fd);
+	
 	close(fd);
 }
