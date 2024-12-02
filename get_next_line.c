@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: burakerenmert <burakerenmert@student.42    +#+  +:+       +#+        */
+/*   By: buramert <buramert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 20:56:15 by buramert          #+#    #+#             */
-/*   Updated: 2024/12/01 05:13:31 by burakerenme      ###   ########.fr       */
+/*   Updated: 2024/12/02 19:34:12 by buramert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,33 @@ static char *ft_get_line(char *str)
 }
 static char *ft_reader(char *str, int fd, int *bytes_read)
 {
-	char	*buffer;
+    char    *buffer;
 
-	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
-	*bytes_read = read(fd, buffer, BUFFER_SIZE);
-	buffer[*bytes_read] = '\0';
-	str = ft_strjoin(str, buffer);
-	return (str);
+    buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    if (!buffer)
+        return (NULL);
+    while (1)
+    {
+        *bytes_read = read(fd, buffer, BUFFER_SIZE);
+        if (*bytes_read <= 0)
+            break;
+        buffer[*bytes_read] = '\0';
+        str = ft_strjoin(str, buffer);
+        if (!str)
+        {
+            free(buffer);
+            return (NULL);
+        }
+        if (ft_check_line(str))
+            break;
+    }
+    free(buffer);
+    if (*bytes_read == -1)
+        return (NULL);
+    return (str);
 }
+
+
 static char *ft_get_remainder(char *str)
 {
 	int		i;
@@ -88,14 +105,13 @@ char *get_next_line(int fd)
 		free(str);
 		str = ft_strdup(temp);
 	}
-	else if (!(ft_check_line(str)) && ft_strlen(str) > 0 && bytes_read > 0)
-		return (NULL);
-	else if (bytes_read <= 0 && (!ft_strlen(str)))
+	else if (!(ft_check_line(str)) && bytes_read == 0 && ft_strlen(str) == 0)
 		return (NULL);
 	else
 	{
 		line_to_return = ft_strdup(str);
 		free(str);
+		str = NULL;
 	}
 	return (line_to_return);
 }
@@ -103,7 +119,7 @@ int main()
 {
 	int fd;
 	fd = open("text.txt", O_RDONLY);
-
+	
 	printf("first read ; %s", get_next_line(fd));
 	printf("second read ; %s", get_next_line(fd));
 	printf("third read ; %s", get_next_line(fd));
